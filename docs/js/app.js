@@ -152,6 +152,54 @@ function renderTimeline() {
   </div>`));
 }
 
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+  "August", "September", "October", "November", "December"];
+
+// "2026-06-19T04:44:54Z" / "2026-06-19" -> "June 19, 2026"
+function formatAddedDate(iso) {
+  const [y, m, d] = (iso || "").slice(0, 10).split("-").map(Number);
+  if (!y || !m || !d) return (iso || "").slice(0, 10);
+  return `${MONTHS[m - 1]} ${d}, ${y}`;
+}
+
+function renderNew() {
+  const MAX_SHOWS = 250;
+  const withAdded = DATA.shows
+    .filter((s) => s.added)
+    .sort((a, b) => b.added.localeCompare(a.added));
+  const recent = withAdded.slice(0, MAX_SHOWS);
+
+  // Group the recent shows into consecutive runs sharing an added day.
+  const groups = [];
+  for (const s of recent) {
+    const day = s.added.slice(0, 10);
+    if (!groups.length || groups[groups.length - 1].day !== day) {
+      groups.push({ day, shows: [] });
+    }
+    groups[groups.length - 1].shows.push(s);
+  }
+
+  const sections = groups.map((g) => `
+    <section class="added-group">
+      <h2 class="added-head">Added ${esc(formatAddedDate(g.day))}
+        <span class="added-count">${g.shows.length} show${g.shows.length === 1 ? "" : "s"}</span>
+      </h2>
+      ${showListHtml(g.shows, "year")}
+    </section>`).join("");
+
+  const note = withAdded.length > MAX_SHOWS
+    ? `<p class="muted">Showing the ${MAX_SHOWS} most recently added shows.</p>` : "";
+
+  setView(el(`<div>
+    <h1>Recently Added</h1>
+    <p class="muted">${withAdded.length
+      ? "The newest additions to the collection, grouped by the day they were added to the Internet Archive."
+      : "No added-date information is available yet — it appears after the next data refresh."}</p>
+    ${note}
+    <div class="added-groups">${sections}</div>
+  </div>`));
+}
+
 function renderYear(year) {
   const shows = showsByYear.get(year) || [];
   setView(el(`<div>
@@ -322,6 +370,7 @@ function route() {
   const hash = location.hash.replace(/^#\/?/, "");
   const [section, param] = hash.split("/").map(decodeURIComponent);
   switch (section) {
+    case "new": return renderNew();
     case "timeline": return renderTimeline();
     case "about": return renderAbout();
     case "band": return renderBand(param);

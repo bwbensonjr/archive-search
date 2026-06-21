@@ -53,7 +53,7 @@ def build():
     venue_info = fetch_info(conn, "venue_info")
 
     rows = conn.execute(
-        "SELECT identifier, title, creator, date, venue, url FROM show"
+        "SELECT identifier, title, creator, date, venue, added_date, url FROM show"
     ).fetchall()
     conn.close()
 
@@ -74,7 +74,7 @@ def build():
     shows = []
     band_counts = Counter()
     venue_counts = Counter()
-    for identifier, title, creator, date, venue, url in rows:
+    for identifier, title, creator, date, venue, added_date, url in rows:
         creator = creator or "Unknown"
         venue = venue or ""
         band_slug = unique_slug(creator, band_slugs)
@@ -89,6 +89,7 @@ def build():
             "venue_slug": venue_slug,
             "date": date or "",
             "year": year,
+            "added": added_date or "",
             "url": url or f"https://archive.org/details/{identifier}",
         })
         band_counts[creator] += 1

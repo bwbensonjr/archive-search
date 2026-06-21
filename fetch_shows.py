@@ -6,7 +6,7 @@ import sqlite3
 import subprocess
 DB_PATH = "shows.db"
 SEARCH_QUERY = "collection:aadamjacobs"
-FIELDS = ["identifier", "date", "title", "venue", "creator"]
+FIELDS = ["identifier", "date", "title", "venue", "creator", "publicdate"]
 
 VENUE_RE = re.compile(r"Live at (.+?) \d{4}-\d{2}-\d{2}")
 
@@ -50,6 +50,7 @@ def create_db(shows):
             creator TEXT,
             date TEXT,
             venue TEXT,
+            added_date TEXT,
             url TEXT
         )
     """)
@@ -62,12 +63,14 @@ def create_db(shows):
         venue = item.get("venue", "") or ""
         if not venue:
             venue = extract_venue_from_title(title)
+        added_date = item.get("publicdate", "") or ""
         url = f"https://archive.org/details/{identifier}"
 
         cur.execute(
-            "INSERT OR REPLACE INTO show (identifier, title, creator, date, venue, url) "
-            "VALUES (?, ?, ?, ?, ?, ?)",
-            (identifier, title, creator, date, venue, url),
+            "INSERT OR REPLACE INTO show "
+            "(identifier, title, creator, date, venue, added_date, url) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (identifier, title, creator, date, venue, added_date, url),
         )
 
     conn.commit()

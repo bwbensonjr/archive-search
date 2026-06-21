@@ -85,6 +85,20 @@ footer p { max-width: var(--max); margin: 0 auto; padding: 1.25rem 1rem; }
 h1 { font-size: 1.6rem; margin: 0 0 0.25rem; }
 h2 { font-size: 1.05rem; color: var(--muted); font-weight: 600; margin: 2rem 0 0.75rem; }
 
+/* Recently Added page */
+.added-group { margin-bottom: 1.75rem; }
+.added-head {
+  display: flex; align-items: baseline; gap: 0.6rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.35rem;
+  margin: 1.5rem 0 0.5rem;
+}
+.added-count {
+  font-size: 0.75rem; font-weight: 600; color: var(--muted);
+  background: var(--surface-2); border-radius: 999px; padding: 0.1rem 0.55rem;
+}
+
 /* About page */
 .about { max-width: 680px; }
 .about p { margin: 0.75rem 0; }
