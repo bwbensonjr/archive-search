@@ -41,6 +41,7 @@ nav {
 }
 
 .brand { font-weight: 700; font-size: 1.15rem; color: var(--text); }
+.brand-accent { color: var(--accent); }
 .nav-links a { margin-left: 1.25rem; color: var(--muted); font-weight: 500; }
 .nav-links a:hover { color: var(--text); text-decoration: none; }
 
@@ -83,6 +84,12 @@ footer p { max-width: var(--max); margin: 0 auto; padding: 1.25rem 1rem; }
 
 h1 { font-size: 1.6rem; margin: 0 0 0.25rem; }
 h2 { font-size: 1.05rem; color: var(--muted); font-weight: 600; margin: 2rem 0 0.75rem; }
+
+/* About page */
+.about { max-width: 680px; }
+.about p { margin: 0.75rem 0; }
+.about ul { padding-left: 1.2rem; }
+.about li { margin: 0.5rem 0; }
 
 /* Timeline year cards */
 .year-cards { display: flex; flex-direction: column; gap: 0.75rem; }

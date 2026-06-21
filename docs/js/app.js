@@ -269,6 +269,46 @@ function renderVenue(slug) {
   </div>`));
 }
 
+function renderAbout() {
+  const years = [...showsByYear.keys()].filter(Boolean).sort();
+  const span = years.length ? `${years[0]}–${years[years.length - 1]}` : "";
+  setView(el(`<div class="about">
+    <h1>About this browser</h1>
+    <p>
+      This is a browsable index of the
+      <a href="https://archive.org/details/@aadam_jacobs_collection" target="_blank" rel="noopener">Aadam Jacobs collection</a>
+      on the Internet Archive — ${DATA.shows.length} recordings of live shows
+      (${span}) by ${DATA.bands.length} artists at ${DATA.venues.length} venues.
+    </p>
+
+    <h2>Goals</h2>
+    <ul>
+      <li><strong>Make the collection explorable.</strong> The recordings live as
+        thousands of individual Internet Archive items; this site gathers them into
+        one place you can browse by band or by year.</li>
+      <li><strong>Add context from the wider web.</strong> Each band and venue is
+        cross-referenced with Wikipedia and Wikidata, so you get a short description,
+        a photo, and genre/origin details alongside the recordings — and a link to
+        read more.</li>
+      <li><strong>Get you to the music quickly.</strong> Every show links straight to
+        its page on archive.org, where you can listen or download.</li>
+    </ul>
+
+    <h2>Sources &amp; attribution</h2>
+    <p>
+      Recordings belong to the Aadam Jacobs collection on the Internet Archive.
+      Band and venue descriptions are excerpts from
+      <a href="https://en.wikipedia.org" target="_blank" rel="noopener">Wikipedia</a>,
+      available under
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA</a>;
+      each entry links back to its source article. Automated matching is imperfect,
+      so some artists or venues may be unmatched or occasionally mismatched.
+    </p>
+
+    <p><a href="#/">Browse the bands →</a></p>
+  </div>`));
+}
+
 function renderNotFound(kind) {
   setView(el(`<div>
     <h1>Not found</h1>
@@ -283,6 +323,7 @@ function route() {
   const [section, param] = hash.split("/").map(decodeURIComponent);
   switch (section) {
     case "timeline": return renderTimeline();
+    case "about": return renderAbout();
     case "band": return renderBand(param);
     case "venue": return renderVenue(param);
     case "year": return renderYear(param);
