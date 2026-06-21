@@ -1,0 +1,58 @@
+name: Update collection
+
+# Daily check for new shows in the Aadam Jacobs collection. If anything
+# changed, re-ingest, enrich newcomers from Wikipedia, rebuild the site data,
+# and commit it back to main (which GitHub Pages serves).
+on:
+  schedule:
+    - cron: "0 6 * * *"   # daily at 06:00 UTC
+  workflow_dispatch: {}     # allow manual runs from the Actions tab
+
+# Needed so the job can push the regenerated data back to the repo.
+permissions:
+  contents: write
+
+# Never let two updates run at once (they both push to main).
+concurrency:
+  group: update-collection
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Fetch shows from the Internet Archive
+        run: uv run fetch_shows.py
+
+      - name: Enrich new bands and venues (incremental)
+        run: uv run enrich.py
+
+      - name: Rebuild site data
+        run: uv run build_site.py
+
+      - name: Commit and push if the site data changed
+        run: |
+          # The generated JSON is deterministic, so a diff here means real
+          # new/changed shows. shows.db churns on every rebuild, so we only
+          # commit it (with its fresh enrichment cache) when data changed.
+          if git status --porcelain docs/data | grep -q .; then
+            echo "New collection data detected; committing."
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs/data shows.db
+            git commit -m "Auto-update collection data ($(date -u +%Y-%m-%d))"
+            git push
+          else
+            echo "No changes in the collection; nothing to commit."
+          fi
