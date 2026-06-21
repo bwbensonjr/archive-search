@@ -64,9 +64,14 @@ A dependency-free, client-side single-page app — plain HTML/CSS/JS that loads
 the generated JSON and renders everything in the browser (hash-based routing,
 so deep links survive a refresh):
 
-- **Timeline** (`#/`) — shows per year + collection stats; click a year to drill in.
-- **Bands** (`#/bands`) — searchable, sortable list; each band page shows its
-  Wikipedia blurb/thumbnail and a chronological list of its shows.
+- **Bands** (`#/`, the landing page) — collection stats plus a searchable,
+  sortable list; each band page shows its Wikipedia blurb/thumbnail and a
+  chronological list of its shows.
+- **New** (`#/new`) — the most recently added shows, grouped into
+  "Added \<date\>" sections by Internet Archive publish date.
+- **Timeline** (`#/timeline`) — shows per year + each year's top bands; click a
+  year to drill in.
+- **About** (`#/about`) — goals and source attribution.
 - **Venues** (`#/venue/<slug>`) — reachable from show rows, with Wikipedia info.
 
 ### Preview locally
