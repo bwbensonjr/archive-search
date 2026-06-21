@@ -41,6 +41,7 @@ nav {
 }
 
 .brand { font-weight: 700; font-size: 1.15rem; color: var(--text); }
+.brand-accent { color: var(--accent); }
 .nav-links a { margin-left: 1.25rem; color: var(--muted); font-weight: 500; }
 .nav-links a:hover { color: var(--text); text-decoration: none; }
 

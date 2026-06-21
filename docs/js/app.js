@@ -294,14 +294,6 @@ function renderAbout() {
         its page on archive.org, where you can listen or download.</li>
     </ul>
 
-    <h2>How it works</h2>
-    <p>
-      Show metadata is pulled from the Internet Archive with its command-line tool,
-      then each band and venue is matched to Wikipedia. The result is published as a
-      set of static files — there is no server or database behind this page, just
-      data baked into the site.
-    </p>
-
     <h2>Sources &amp; attribution</h2>
     <p>
       Recordings belong to the Aadam Jacobs collection on the Internet Archive.
