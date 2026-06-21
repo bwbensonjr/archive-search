@@ -1,0 +1,203 @@
+:root {
+  --bg: #14110f;
+  --surface: #1f1a17;
+  --surface-2: #2a231e;
+  --text: #f2ece4;
+  --muted: #a89c8d;
+  --accent: #e0703c;
+  --accent-dim: #7a3f22;
+  --border: #3a302a;
+  --max: 960px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+nav {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand { font-weight: 700; font-size: 1.15rem; color: var(--text); }
+.nav-links a { margin-left: 1.25rem; color: var(--muted); font-weight: 500; }
+.nav-links a:hover { color: var(--text); text-decoration: none; }
+
+main {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+  min-height: 60vh;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+footer p { max-width: var(--max); margin: 0 auto; padding: 1.25rem 1rem; }
+
+.loading { color: var(--muted); }
+.muted { color: var(--muted); }
+
+/* Breadcrumb / back link */
+.crumb { color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem; }
+
+/* Stats row on the home page */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  text-align: center;
+}
+.stat .num { font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+.stat .label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+h1 { font-size: 1.6rem; margin: 0 0 0.25rem; }
+h2 { font-size: 1.05rem; color: var(--muted); font-weight: 600; margin: 2rem 0 0.75rem; }
+
+/* Timeline year cards */
+.year-cards { display: flex; flex-direction: column; gap: 0.75rem; }
+.year-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+}
+.year-card:hover { border-color: var(--accent-dim); }
+.year-card-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.5rem; }
+.year-num { font-size: 1.3rem; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+.year-num:hover { color: var(--accent); text-decoration: none; }
+.year-count { color: var(--muted); font-size: 0.8rem; }
+
+.bar-track { background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+.bar-fill {
+  height: 8px;
+  background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+  border-radius: 4px;
+  min-width: 2px;
+}
+.year-card .bar-track { margin-bottom: 0.75rem; }
+
+.year-bands { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.mini-band {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem 0.2rem 0.2rem;
+  color: var(--text);
+  font-size: 0.8rem;
+  max-width: 100%;
+}
+.mini-band:hover { border-color: var(--accent); text-decoration: none; }
+.mini-thumb {
+  width: 26px; height: 26px; border-radius: 50%; object-fit: cover;
+  background: var(--bg); flex-shrink: 0;
+}
+.mini-thumb.placeholder {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.6rem; font-weight: 700; color: var(--muted);
+}
+.mini-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+
+/* Search + sort controls */
+.controls { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.25rem; }
+.controls input, .controls select {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.95rem;
+}
+.controls input { flex: 1; min-width: 200px; }
+
+/* Band grid */
+.band-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+.band-card {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.7rem;
+}
+.band-card:hover { border-color: var(--accent-dim); text-decoration: none; }
+.band-card .thumb {
+  width: 48px; height: 48px; border-radius: 6px; object-fit: cover;
+  background: var(--surface-2); flex-shrink: 0;
+}
+.band-card .thumb.placeholder {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-weight: 700; font-size: 1.1rem;
+}
+.band-card .name { color: var(--text); font-weight: 600; line-height: 1.2; }
+.band-card .sub { color: var(--muted); font-size: 0.8rem; }
+
+/* Detail header (band/venue) */
+.detail-head { display: flex; gap: 1.25rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.detail-head img {
+  width: 140px; height: 140px; object-fit: cover; border-radius: 10px;
+  border: 1px solid var(--border); flex-shrink: 0;
+}
+.detail-head .meta { flex: 1; min-width: 240px; }
+.detail-head .extract { margin: 0.5rem 0; }
+.detail-head .facts { color: var(--muted); font-size: 0.85rem; margin: 0.5rem 0; }
+.detail-head .facts span { margin-right: 1rem; }
+
+/* Show list */
+.show-list { display: flex; flex-direction: column; gap: 1px; }
+.show-row {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr auto;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.55rem 0.6rem;
+  border-radius: 6px;
+}
+.show-row:nth-child(odd) { background: var(--surface); }
+.show-row .date { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.85rem; }
+.show-row .who { font-weight: 500; }
+.show-row .where { color: var(--muted); font-size: 0.9rem; }
+.show-row .listen { font-size: 0.85rem; white-space: nowrap; }
+
+@media (max-width: 560px) {
+  .show-row { grid-template-columns: 5rem 1fr; }
+  .show-row .listen { grid-column: 2; }
+}
